@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+<meta charset="ISO-8859-1">
+<title>Super Market</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script>
+function searchProduct(str){
+	var xmlhttp;
+	if (str=="")
+  	{  
+		document.getElementById("txtHint").innerHTML="";
+  		return;  
+  	}
+	if (window.XMLHttpRequest)
+  	{// code for IE7+, Firefox, Chrome, Opera, Safari
+  		xmlhttp=new XMLHttpRequest();
+  	}
+	else
+  	{// code for IE6, IE5
+  		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  	}
+
+	xmlhttp.onreadystatechange=function()
+  	{
+  		if (xmlhttp.readyState==4 && xmlhttp.status==200)
+		{    
+			  var results = xmlhttp.responseXML;
+			  var x = results.getElementsByTagName("product");
+			  var r = "";
+			  for (i = 0; i < x.length; i++) {
+				  r += "<div class = 'content'><div class='productinfo text-center'><h2>"+x[i].getElementsByTagName("productPrice")[0]
+                  .childNodes[0].nodeValue+"</h2><p>"+x[i].getElementsByTagName("productName")[0]
+                  .childNodes[0].nodeValue+"</p><a href='' class='btn btn-default add-to-cart'><i class='fa fa-shopping-cart'></i>Add to cart</a></div>";
+			  }
+			  document.getElementById("txtHint").innerHTML = r;
+		}
+  	}
+	xmlhttp.open("GET","http://localhost:8080/InvoiceApplication/api/products/search?search_product="+str,true);
+	xmlhttp.send();
+	
+}
+</script>
+<style>
+input[type="text"] {
+    margin-left: 545px;
+}
+.fa-facebook{
+    text-align: center;
+    font-size: 15px;
+    position: relative;
+    bottom: 20px;
+    color: white;
+    width:20px;
+    text-decoration: none;
+}
+.fa-instagram{
+   text-align: center;
+    font-size: 15px;
+    position: relative;
+    bottom: 20px;
+    color: white;
+    text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+/* Style the body */
+body {
+  font-family: Arial, Helvetica, sans-serif;
+	margin: 0;
+        padding:0;
+}
+
+/* Header/logo Title */
+.header {
+  overflow: hidden;
+  background: linear-gradient(to right, #536976,#292E49);
+  padding: 90px;
+  text-align: center;
+}
+
+/* Increase the font size of the heading */
+.header h1 {
+  text-shadow: 2px 2px 5px black;
+  color: #D3CCE3;
+  text-align: center;
+  font-size: 40px;
+  animation : 1s slideout-right;
+}
+
+.header h4{
+ animation : 1s slideout-right;
+ position: relative;
+ left:-13px;
+ top: -20px;
+ text-align: center;
+ color: #D3CCE3;
+ text-shadow: 2px 2px 5px black;
+}
+
+/* Style the top navigation bar */
+.navbar {
+  overflow: hidden;
+  background-color: #333;
+}
+
+/* Style the navigation bar links */
+.navbar a{
+  overflow: hidden;
+  float: left;
+  display: block;
+  width: 421px;
+  color: white;
+  text-align: center;
+  padding: 20px 20px;
+  text-decoration:none;
+}
+.navbar{
+   overflow: hidden;
+   position: sticky;
+   top: 0px;
+}
+
+.navbar a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+
+.footer {
+  position:relative;
+  top: 300px;
+  z-index:-1;
+  background:black;
+  padding: 5px;
+  text-align: center;
+  color:#D3CCE3;
+}
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>SUPER MARKET<br><br></h1>
+</div>
+<div class="navbar">
+  <a href="index.html"></a>
+  <a href= "javascript:change2()" id= "bo/ty"></a>
+  <a href = "javascript:change()" id = "au/bo"></a>
+</div>
+<br>
+<p align = center id = "bookname" style ="font-weight: bold;">SEARCH FOR PRODUCTS</p>
+<form> 
+<input  type="text" id = "search" onkeyup="searchProduct(this.value)" autocomplete="off"> 
+</form>
+<p><span id="txtHint"></span></p>
+<!-- <div class = "content">
+	<div class="productinfo text-center">
+	<img src="/InvoiceApplication/src/pen.jpg" alt="failed">
+	<h2>$56</h2>
+	<p>Pen</p>
+	<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+</div>-->
+<div class="footer">
+  <h6>&#169; SUPER MARKET</h6><br>
+  <a href="https://www.facebook.com/" class="fa fa-facebook"></a>
+  <a href="https://www.instagram.com/" class="fa fa-instagram"></a>
+</div>
+</body>
+</html>
